@@ -202,10 +202,11 @@ const LandingPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { step: '1', title: 'Upload File', description: 'Drag & drop or select your file' },
-              { step: '2', title: 'Get Link', description: 'Generate a secure sharing link' },
-              { step: '3', title: 'Share', description: 'Send the link to your recipient' },
-              { step: '4', title: 'Transfer', description: 'Direct P2P transfer begins' }
+              { step: '1', title: 'Connect to a WI-Fi', description: 'make sure both the devices are connceted to the same wifi' },
+              { step: '2', title: 'Upload File', description: 'Drag & drop or select your file' },
+              { step: '3', title: 'Get Link', description: 'Generate a secure sharing link' },
+              { step: '4', title: 'Share', description: 'Send the link to your recipient' },
+              { step: '5', title: 'Transfer', description: 'Direct P2P transfer begins' }
             ].map((item, index) => (
               <motion.div
                 key={index}
@@ -265,7 +266,7 @@ const LandingPage = () => {
             <span className="text-xl font-bold">FlyFile</span>
           </div>
           <p className="text-gray-400 mb-4">
-            Private P2P file sharing. Built with ❤️ for privacy.
+            Private P2P file sharing. Built with ❤️ by Alyan for privacy.
           </p>
           <div className="flex items-center justify-center gap-6 text-sm text-gray-400">
             <span>Privacy Policy</span>
