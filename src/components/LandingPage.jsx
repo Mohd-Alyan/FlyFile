@@ -53,8 +53,8 @@ const LandingPage = () => {
   const stats = [
     { number: '0', label: 'Files Stored', sublabel: 'Complete privacy' },
     { number: '∞', label: 'File Size Limit', sublabel: 'Send anything' },
-    { number: '100%', label: 'Encrypted', sublabel: 'WebRTC security' },
-    { number: '0%', label: 'Knowledge', sublabel: 'WebRTC security' }
+    { number: '100%', label: 'Encrypted', sublabel: 'WebRTC security' }
+
   ]
 
   return (
