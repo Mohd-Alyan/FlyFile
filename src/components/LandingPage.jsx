@@ -100,11 +100,6 @@ const LandingPage = () => {
                 Send a File
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              
-              <button className="btn-secondary text-lg px-8 py-4 flex items-center gap-2">
-                <FileText className="w-5 h-5" />
-                Learn More
-              </button>
             </motion.div>
 
             {/* Stats */}
