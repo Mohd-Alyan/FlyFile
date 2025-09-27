@@ -26,9 +26,8 @@ export const WebRTCProvider = ({ children }) => {
   const currentFileReader = useRef(null);
   const transferCanceled = useRef(false);
 
-  // Queue ICE candidates and remote answers until peer ready
+  // Queue ICE candidates if peer not ready
   const iceQueue = useRef([]);
-  const answerQueue = useRef([]);
 
   const handleIncomingData = useCallback((data) => {
     try {
@@ -102,7 +101,6 @@ export const WebRTCProvider = ({ children }) => {
     peerRef.current = peer;
     setPeerConnection(peer);
     iceQueue.current = [];
-    answerQueue.current = [];
 
     // Data channel setup
     if (initiator) {
@@ -128,63 +126,53 @@ export const WebRTCProvider = ({ children }) => {
     };
 
     peer.onconnectionstatechange = () => setConnectionState(peer.connectionState);
-    peer.oniceconnectionstatechange = () => console.log('ICE state:', peer.iceConnectionState);
 
     // Handle ICE candidates safely
     socketRef.current.on('ice-candidate', (data) => {
       const peer = peerRef.current;
-      if (!peer || peer.signalingState === 'closed') return;
+      if (!peer || peer.signalingState === 'closed') {
+        console.warn('Ignoring ICE candidate, peer closed');
+        return;
+      }
+
       const candidate = data?.candidate;
       if (!candidate) return;
 
-      if (peer.signalingState !== 'stable' || peer.remoteDescription) {
+      if (peer.signalingState === 'stable' || peer.remoteDescription) {
         peer.addIceCandidate(new RTCIceCandidate(candidate)).catch(console.error);
       } else {
         iceQueue.current.push(candidate);
       }
     });
 
+    // Flush queued ICE candidates
     const flushIceQueue = () => {
       const peer = peerRef.current;
-      if (!peer || peer.signalingState === 'closed') return;
-      if (!peer.remoteDescription) return;
-
-      iceQueue.current.forEach(c => peer.addIceCandidate(new RTCIceCandidate(c)).catch(console.error));
-      iceQueue.current = [];
+      if (peer && peer.signalingState !== 'closed' && peer.remoteDescription) {
+        iceQueue.current.forEach(c => peer.addIceCandidate(new RTCIceCandidate(c)).catch(console.error));
+        iceQueue.current = [];
+      }
     };
 
-    // Offer/Answer handling with queuing
+    // Offer/Answer handling
     socketRef.current.on('offer', async ({ offer }) => {
       const peer = peerRef.current;
-      if (!peer || peer.signalingState === 'closed' || role !== 'receiver') return;
+      if (!peer || peer.signalingState === 'closed') return;
+      if (role !== 'receiver') return;
 
       await peer.setRemoteDescription(offer);
       const answer = await peer.createAnswer();
       await peer.setLocalDescription(answer);
       socketRef.current.emit('answer', { sessionId, answer });
-
       flushIceQueue();
-      flushAnswerQueue();
     });
-
-    const flushAnswerQueue = async () => {
-      const peer = peerRef.current;
-      if (!peer || peer.signalingState !== 'have-local-offer') return;
-      while (answerQueue.current.length) {
-        const ans = answerQueue.current.shift();
-        await peer.setRemoteDescription(ans).catch(console.error);
-      }
-    };
 
     socketRef.current.on('answer', async ({ answer }) => {
       const peer = peerRef.current;
-      if (!peer || peer.signalingState === 'closed' || role !== 'sender') return;
+      if (!peer || peer.signalingState === 'closed') return;
+      if (role !== 'sender') return;
 
-      if (peer.signalingState === 'have-local-offer') {
-        await peer.setRemoteDescription(answer).catch(console.error);
-      } else {
-        answerQueue.current.push(answer);
-      }
+      await peer.setRemoteDescription(answer);
       flushIceQueue();
     });
 
@@ -227,7 +215,8 @@ export const WebRTCProvider = ({ children }) => {
 
     peer.dataChannel.bufferedAmountLowThreshold = 16 * 1024;
 
-    peer.dataChannel.send(JSON.stringify({ type: 'file-info', name: file.name, size: file.size }));
+    const fileInfo = JSON.stringify({ type: 'file-info', name: file.name, size: file.size });
+    peer.dataChannel.send(fileInfo);
 
     const readSlice = () => {
       if (transferCanceled.current) return;
@@ -279,7 +268,6 @@ export const WebRTCProvider = ({ children }) => {
     setTransferProgress(0);
     setIsConnected(false);
     iceQueue.current = [];
-    answerQueue.current = [];
   }, []);
 
   const value = {
@@ -301,4 +289,3 @@ export const WebRTCProvider = ({ children }) => {
 
   return <WebRTCContext.Provider value={value}>{children}</WebRTCContext.Provider>;
 };
-S
