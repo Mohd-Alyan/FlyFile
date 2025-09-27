@@ -200,7 +200,7 @@ const LandingPage = () => {
             </p>
           </motion.div>
 
-          <div className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             {[
               { step: '1', title: 'Connect to a WI-Fi', description: 'make sure both the devices are connceted to the same wifi' },
               { step: '2', title: 'Upload File', description: 'Drag & drop or select your file' },
