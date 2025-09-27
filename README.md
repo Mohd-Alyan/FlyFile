@@ -11,30 +11,15 @@ A professional-grade web application for secure, private browser-to-browser file
 - ⚡ **Fast**: No upload/download to servers, direct peer connections
 - 🌙 **Dark Mode**: Beautiful light and dark themes
 
-## Quick Start
-
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-2. **Start development server**:
-   ```bash
-   npm run dev
-   ```
-
-3. **Open your browser**:
-   - Frontend: http://localhost:5173
-   - Signaling Server: http://localhost:3001
-
 ## How It Works
 
-1. **Sender** uploads a file and gets a shareable link
-2. **Receiver** opens the link and sees file details
-3. **Accept/Decline** - receiver chooses to accept the transfer
-4. **P2P Connection** - WebRTC establishes direct connection
-5. **Transfer** - file transfers directly between browsers
-6. **Complete** - both users see success confirmation
+1. **Both The Users** connect to the same Wi-Fi network
+2. **Sender** uploads a file and gets a shareable link
+3. **Receiver** opens the link and sees file details
+4. **Accept/Decline** - receiver chooses to accept the transfer
+5. **P2P Connection** - WebRTC establishes direct connection
+6. **Transfer** - file transfers directly between browsers
+7. **Complete** - both users see success confirmation
 
 ## Architecture
 
@@ -49,30 +34,3 @@ A professional-grade web application for secure, private browser-to-browser file
 - No server-side file storage
 - Session-based temporary connections
 - Optional end-to-end encryption layer
-
-## Browser Support
-
-- Chrome 80+
-- Firefox 75+
-- Safari 14+
-- Edge 80+
-
-## Development
-
-```bash
-# Install dependencies
-npm install
-
-# Start both client and server
-npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
-```
-
-## License
-
-MIT License - see LICENSE file for details.
