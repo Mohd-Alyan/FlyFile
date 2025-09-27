@@ -10,10 +10,11 @@ const server = http.createServer(app)
 // Configure CORS
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-domain.com'] 
+    ? ['https://flyfile.vercel.app', 'https://flyfile-signaling-production.up.railway.app'] 
     : ['http://localhost:5173', 'http://127.0.0.1:5173'],
   credentials: true
 }
+
 
 app.use(cors(corsOptions))
 app.use(express.json())
