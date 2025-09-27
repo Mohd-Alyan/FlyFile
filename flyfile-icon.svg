@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0ea5e9"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="128" y1="96" x2="448" y2="416" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#93c5fd" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0ea5e9" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <!-- Background rounded square -->
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#g1)"/>
+  
+  <!-- Flying file icon -->
+  <g filter="url(#shadow)">
+    <!-- Paper/file -->
+    <path d="M176 144h144l48 48v176c0 17.7-14.3 32-32 32H176c-17.7 0-32-14.3-32-32V176c0-17.7 14.3-32 32-32z" fill="white"/>
+    <path d="M320 144v48c0 8.8 7.2 16 16 16h48" fill="white"/>
+    <!-- Fold -->
+    <path d="M320 144l64 64h-48c-8.8 0-16-7.2-16-16v-48z" fill="url(#g2)"/>
+    
+    <!-- Motion lines (symbolizing speed/privacy) -->
+    <rect x="112" y="224" width="64" height="10" rx="5" fill="white" opacity="0.8"/>
+    <rect x="96" y="256" width="96" height="10" rx="5" fill="white" opacity="0.7"/>
+    <rect x="128" y="288" width="72" height="10" rx="5" fill="white" opacity="0.6"/>
+    
+    <!-- Lock symbol subtly embedded -->
+    <g transform="translate(248,268)">
+      <rect x="-20" y="6" width="40" height="28" rx="6" fill="#0ea5e9" opacity="0.9"/>
+      <path d="M-8 6v-6a16 16 0 0132 0v6h-8v-6a8 8 0 10-16 0v6h-8z" fill="#0ea5e9" opacity="0.9"/>
+      <circle cx="0" cy="20" r="4" fill="white"/>
+    </g>
+  </g>
+</svg>
