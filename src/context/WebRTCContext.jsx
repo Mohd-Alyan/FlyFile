@@ -70,12 +70,12 @@ export const WebRTCProvider = ({ children }) => {
   // STUN/TURN configuration
   const rtcConfig = {
     iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },
-      { urls: 'stun:stun1.l.google.com:19302' },
+      { urls: import.meta.env.VITE_STUN_SERVER_1 },
+      { urls: import.meta.env.VITE_STUN_SERVER_2 },
       {
-        urls: 'turn:openrelay.metered.ca:443',
-        username: 'openrelayproject',
-        credential: 'openrelayproject'
+        urls: import.meta.env.VITE_TURN_SERVER,
+        username: import.meta.env.VITE_TURN_USERNAME,
+        credential: import.meta.env.VITE_TURN_CREDENTIAL
       }
     ]
   }
