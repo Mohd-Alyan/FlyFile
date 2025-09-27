@@ -73,9 +73,9 @@ export const WebRTCProvider = ({ children }) => {
       { urls: import.meta.env.VITE_STUN_SERVER_1 },
       { urls: import.meta.env.VITE_STUN_SERVER_2 },
       {
-        urls: import.meta.env.VITE_TURN_SERVER,
-        username: import.meta.env.VITE_TURN_USERNAME,
-        credential: import.meta.env.VITE_TURN_CREDENTIAL
+        urls: "turn:global.relay.metered.ca:80",
+        username: "3847967e4150fef3e4dd82ef",
+        credential: "dbU3LKfYG1piYJV7"
       }
     ]
   }
