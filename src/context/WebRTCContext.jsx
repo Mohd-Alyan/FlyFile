@@ -80,8 +80,10 @@ export const WebRTCProvider = ({ children }) => {
   const initializeSocket = useCallback(() => {
     if (socketRef.current) return socketRef.current
 
-    const newSocket = io(import.meta.env.VITE_SERVER_URL || 'http://localhost:3001')
-    
+    const newSocket = io('https://flyfile-production.up.railway.app', {
+      transports: ['websocket']
+    })
+
     newSocket.on('connect', () => {
       console.log('Connected to signaling server')
       setIsConnected(true)
